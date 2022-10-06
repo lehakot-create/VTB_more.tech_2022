@@ -1,14 +1,10 @@
 from fastapi import FastAPI, Request
-from pydantic import BaseModel
 
 from db import RedisConnector
+from schemas import Role, ListSource
 
 app = FastAPI()
 conn = RedisConnector()
-
-
-class Role(BaseModel):
-    role: str
 
 
 @app.post("/role/")
@@ -34,4 +30,26 @@ def get_all_roles():
     :return:
     """
     result = conn.get_all_roles()
+    return result
+
+
+@app.post("/source/")
+def post_new_source(source: ListSource):
+    """
+    Добавляет источники RSS-лент к роли
+    :param source:
+    :return:
+    """
+    conn.add_source(source.role.role, source.lstSource)
+    return {"status": "ok"}
+
+
+@app.get("/source/")
+def get_source(role: Role):
+    """
+    Возвращает все источники для роли
+    :param role:
+    :return:
+    """
+    result = conn.get_source(role.role)
     return result
