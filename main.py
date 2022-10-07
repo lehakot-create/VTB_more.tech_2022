@@ -1,7 +1,8 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, BackgroundTasks
 
 from db import RedisConnector
 from schemas import Role, ListSource
+from utils.app import main
 
 app = FastAPI()
 conn = RedisConnector()
@@ -53,3 +54,14 @@ def get_source(role: Role):
     """
     result = conn.get_source(role.role)
     return result
+
+
+@app.get('/news/')
+def parse_news(role: Role, background_tasks: BackgroundTasks):
+    """
+    Парсит новости для роли
+    :param rule:
+    :return:
+    """
+    background_tasks.add_task(main, role.role, conn=conn)
+    return {"status": "ok"}

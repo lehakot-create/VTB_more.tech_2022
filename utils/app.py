@@ -1,17 +1,9 @@
 import feedparser
-import csv
-import pandas as pd
-import re
 
-our_feeds = {'https://www.glavbukh.ru/': 'https://www.glavbukh.ru/rss/news.xml',
-             'https://buh.ru/news/': 'https://buh.ru/rss/?chanel=news',
-             }  # пример словаря RSS-лент
 
-f_all_news = 'allnews.csv'
-f_certain_news = 'certainnews.csv'  # пример пути файла
-
-vector1 = 'ДолЛАР|РубЛ|ЕвРО'  # пример таргетов
-vector2 = 'бух'
+# our_feeds = {'https://www.glavbukh.ru/': 'https://www.glavbukh.ru/rss/news.xml',
+#              'https://buh.ru/news/': 'https://buh.ru/rss/?chanel=news',
+#              }  # пример словаря RSS-лент
 
 
 def check_url(url_feed):  # функция получает линк на рсс ленту, возвращает
@@ -19,88 +11,40 @@ def check_url(url_feed):  # функция получает линк на рсс
     return feedparser.parse(url_feed)
 
 
-def getHeadlines(url_feed):  # функция для получения заголовков новости
-    headlines = []
+def getData(url_feed: str):
+    data = []
     lenta = check_url(url_feed)
     for item_of_news in lenta['items']:
-        headlines.append(item_of_news['title'])
-    return headlines
+        data.append({
+            "title": item_of_news['title'],
+            "description": item_of_news['description'],
+            "link": item_of_news['link'],
+            "published": item_of_news['published']
+        })
+    return data
 
 
-def getDescriptions(url_feed):  # функция для получения описания новости
-    descriptions = []
-    lenta = check_url(url_feed)
-    for item_of_news in lenta['items']:
-        descriptions.append(item_of_news['description'])
-    return descriptions
+def get_source(role: str, conn):
+    return conn.get_source(role)
 
 
-def getLinks(url_feed):  # функция для получения ссылки на источник новости
-    links = []
-    lenta = check_url(url_feed)
-    for item_of_news in lenta['items']:
-        links.append(item_of_news['link'])
-    return links
+def main(role: str, conn):
+    all_data = []
+    result = get_source(role, conn)
+
+    for el in result:
+        print(str(eval(el).values()))
+        print(type(eval(el)))
+        all_data.extend(getData(eval(el).values()))
+    # source = {'https://www.glavbukh.ru/': 'https://www.glavbukh.ru/rss/news.xml',
+    #              'https://buh.ru/news/': 'https://buh.ru/rss/?chanel=news',
+    #              }  # пример словаря RSS-лент
+
+    # for value in source.values():
+    #     all_data.extend(getData(value))
+
+    # print(all_data)
 
 
-def getDates(url_feed):  # функция для получения даты публикации новости
-    dates = []
-    lenta = check_url(url_feed)
-    for item_of_news in lenta['items']:
-        dates.append(item_of_news['published'])
-    return dates
-
-
-allheadlines = []
-alldescriptions = []
-alllinks = []
-alldates = []
-# Прогоняем наши URL и добавляем их в наши пустые списки
-for key, url in our_feeds.items():
-    allheadlines.extend(getHeadlines(url))
-
-for key, url in our_feeds.items():
-    alldescriptions.extend(getDescriptions(url))
-
-for key, url in our_feeds.items():
-    alllinks.extend(getLinks(url))
-
-for key, url in our_feeds.items():
-    alldates.extend(getDates(url))
-
-
-def write_all_news(all_news_filepath):  # функция для записи всех новостей в .csv,
-    # возвращает нам этот датасет
-    header = ['Title', 'Description', 'Links', 'Publication Date']
-
-    with open(all_news_filepath, 'w', encoding='utf-8-sig') as csvfile:
-        writer = csv.writer(csvfile, delimiter=',')
-
-        writer.writerow(i for i in header)
-
-        for a, b, c, d in zip(allheadlines, alldescriptions,
-                              alllinks, alldates):
-            writer.writerow((a, b, c, d))
-
-        df = pd.read_csv(all_news_filepath)
-
-    return df
-
-
-def looking_for_certain_news(all_news_filepath, certain_news_filepath, target1,
-                             target2):  # функция для поиска, а затем записи
-    # определенных новостей по таргета,
-    # затем возвращает этот датасет
-    df = pd.read_csv(all_news_filepath)
-
-    result = df.apply(lambda x: x.str.contains(target1, na=False, flags=re.IGNORECASE, regex=True)).any(axis=1)
-    result2 = df.apply(lambda x: x.str.contains(target2, na=False, flags=re.IGNORECASE, regex=True)).any(axis=1)
-    new_df = df[result & result2]
-
-    new_df.to_csv(certain_news_filepath, sep='\t', encoding='utf-8-sig')
-
-    return new_df
-
-
-write_all_news(f_all_news)
-looking_for_certain_news(f_all_news, f_certain_news, vector1, vector2)
+# if __name__ == "__main__":
+#     main(our_feeds)
