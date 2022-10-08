@@ -17,3 +17,9 @@ class RedisConnector:
 
     def get_source(self, role):
         return self.conn.lrange(f"{role}_source", 0, -1)
+
+    def write_news(self, role: str, news: list):
+        self.conn.rpush(f"{role}_news", str(news))
+
+    def get_news(self, role: str):
+        return self.conn.lrange(f"{role}_news", 0, -1)

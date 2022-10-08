@@ -2,7 +2,7 @@ from fastapi import FastAPI, BackgroundTasks
 
 from db import RedisConnector
 from schemas import Role, ListSource
-from utils.app import main
+from utils.app import main, collect_role
 from utils.init_db import initialize
 
 app = FastAPI()
@@ -12,6 +12,7 @@ conn = RedisConnector()
 @app.get("/")
 def index(background_tasks: BackgroundTasks):
     background_tasks.add_task(initialize, conn=conn)
+    background_tasks.add_task(collect_role, conn=conn)
     return "WELCOME TO THE FUTURE"
 
 
@@ -74,5 +75,6 @@ def parse_news(role: str, background_tasks: BackgroundTasks):
     :param role:
     :return:
     """
-    background_tasks.add_task(main, role, conn=conn)
-    return {"status": "ok"}
+    # background_tasks.add_task(main, role, conn=conn)
+    result = conn.get_news(role)
+    return result

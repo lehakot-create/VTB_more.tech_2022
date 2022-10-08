@@ -34,4 +34,11 @@ def main(role: str, conn):
     for el in result:
         value = list(eval(el).values())[0]
         all_data.extend(get_data(value))
-    print(all_data)
+    # print(all_data)
+    conn.write_news(role, all_data)
+
+
+def collect_role(conn):
+    roles = conn.get_all_roles()
+    for role in roles:
+        main(role, conn)
