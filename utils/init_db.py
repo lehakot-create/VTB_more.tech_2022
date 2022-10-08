@@ -9,7 +9,7 @@ rss_channels_for_buh = [
     },
 ]
 
-rss_channels_for_lawyers = [
+rss_channels_for_leaders = [
     {
         "title": 'http://www.consultant.ru/fd',
         "rss": 'http://www.consultant.ru/rss/fd.xml',
@@ -80,7 +80,7 @@ init_roles = [{
 },
     {
         'role': 'lawyers',
-        "rss": rss_channels_for_lawyers,
+        "rss": rss_channels_for_leaders,
     },
     {
         'role': 'personal',
