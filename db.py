@@ -2,7 +2,7 @@ import redis
 
 
 class RedisConnector:
-    conn = redis.StrictRedis(host='0.0.0.0',
+    conn = redis.StrictRedis(host='redis',
                              decode_responses=True)
 
     def write_role(self, role):
