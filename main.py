@@ -1,4 +1,4 @@
-from fastapi import FastAPI, BackgroundTasks, Request
+from fastapi import FastAPI, BackgroundTasks
 
 from db import RedisConnector
 from schemas import Role, ListSource
@@ -11,9 +11,7 @@ conn = RedisConnector()
 
 @app.get("/")
 def index(background_tasks: BackgroundTasks):
-    # создать роль
     background_tasks.add_task(initialize, conn=conn)
-    # заполнить ее источниками
     return "WELCOME TO THE FUTURE"
 
 
@@ -21,12 +19,12 @@ def index(background_tasks: BackgroundTasks):
 def get_trends():
     return "Hello from trends"
 
+
 @app.post("/role/")
 def write_new_role(role: Role):
     """
     Создает новую роль
-    :param role:
-    :param request: название роли
+    :param role: название роли
     :return:
     """
     role = role.role
