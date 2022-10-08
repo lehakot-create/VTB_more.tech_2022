@@ -91,9 +91,12 @@ def check_source(conn):
             # print("el", {el.get('title'): el.get('rss')})
             if {el.get('title'): el.get('rss')} not in result:
                 # print(el)
-                conn.add_source(role, {
+                print({
                     "name": el.get('title'),
                     "url": el.get('rss')})
+                conn.add_source(role, [{
+                    "name": el.get('title'),
+                    "url": el.get('rss')}])
                 # output_lst.append({
                 #     "name": el.get('title'),
                 #     "url": el.get('rss')}

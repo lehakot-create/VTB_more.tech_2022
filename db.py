@@ -14,6 +14,7 @@ class RedisConnector:
     def add_source(self, role, source: list):
         # print("source", source)
         for el in source:
+            # print(el)
             # print(el.get('name'))
             self.conn.rpush(f"{role}_source", str({el.get("name"): el.get("url")}))
 
