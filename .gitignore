@@ -4,6 +4,5 @@ data/
 consultant/
 output.csv
 utils/best_model.hdf5
-utils/neuro.py
 utils/tmp.py
 utils/tokenizer.pickle
