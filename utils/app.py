@@ -1,13 +1,12 @@
 import feedparser
 
 
-# our_feeds = {'https://www.glavbukh.ru/': 'https://www.glavbukh.ru/rss/news.xml',
-#              'https://buh.ru/news/': 'https://buh.ru/rss/?chanel=news',
-#              }  # пример словаря RSS-лент
-
-
-def check_url(url_feed):  # функция получает линк на рсс ленту, возвращает
-    # распаршенную ленту с помощью feedpaeser
+def check_url(url_feed):
+    """
+    функция получает линк на рсс ленту, возвращает распаршенную ленту с помощью feedpaeser
+    :param url_feed:
+    :return:
+    """
     return feedparser.parse(url_feed)
 
 
@@ -33,17 +32,10 @@ def main(role: str, conn):
     result = get_source(role, conn)
 
     for el in result:
-        print(str(eval(el).values()))
-        print(type(eval(el)))
-        all_data.extend(getData(eval(el).values()))
-    # source = {'https://www.glavbukh.ru/': 'https://www.glavbukh.ru/rss/news.xml',
-    #              'https://buh.ru/news/': 'https://buh.ru/rss/?chanel=news',
-    #              }  # пример словаря RSS-лент
+        value = list(eval(el).values())[0]
+        all_data.extend(getData(value))
+    print(all_data)
 
-    # for value in source.values():
-    #     all_data.extend(getData(value))
-
-    # print(all_data)
 
 
 # if __name__ == "__main__":
