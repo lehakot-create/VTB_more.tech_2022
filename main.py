@@ -1,4 +1,4 @@
-from fastapi import FastAPI, BackgroundTasks
+from fastapi import FastAPI, BackgroundTasks, Request
 
 from db import RedisConnector
 from schemas import Role, ListSource
@@ -16,6 +16,10 @@ def index(background_tasks: BackgroundTasks):
     # заполнить ее источниками
     return "WELCOME TO THE FUTURE"
 
+
+@app.get("/trends/")
+def get_trends():
+    return "Hello from trends"
 
 @app.post("/role/")
 def write_new_role(role: Role):
@@ -55,22 +59,22 @@ def post_new_source(source: ListSource):
 
 
 @app.get("/source/")
-def get_source(role: Role):
+def get_source(role: str):
     """
     Возвращает все источники для роли
     :param role:
     :return:
     """
-    result = conn.get_source(role.role)
+    result = conn.get_source(role)
     return result
 
 
 @app.get('/news/')
-def parse_news(role: Role, background_tasks: BackgroundTasks):
+def parse_news(role: str, background_tasks: BackgroundTasks):
     """
     Парсит новости для роли
-    :param rule:
+    :param role:
     :return:
     """
-    background_tasks.add_task(main, role.role, conn=conn)
+    background_tasks.add_task(main, role, conn=conn)
     return {"status": "ok"}

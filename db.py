@@ -12,8 +12,10 @@ class RedisConnector:
         return self.conn.lrange("roles", 0, -1)
 
     def add_source(self, role, source: list):
+        # print("source", source)
         for el in source:
-            self.conn.rpush(f"{role}_source", str({el.name: el.url}))
+            # print(el.get('name'))
+            self.conn.rpush(f"{role}_source", str({el.get("name"): el.get("url")}))
 
     def get_source(self, role):
         return self.conn.lrange(f"{role}_source", 0, -1)

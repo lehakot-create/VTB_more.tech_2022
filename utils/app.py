@@ -1,3 +1,5 @@
+import csv
+
 import feedparser
 
 
@@ -36,6 +38,24 @@ def main(role: str, conn):
         all_data.extend(getData(value))
     print(all_data)
 
+    # header = ['title', 'description', 'link', 'published']
+    # with open('output.csv', 'w',encoding='utf-8-sig') as csvfile:
+    #     writer = csv.writer(csvfile, delimiter=';')
+    #     writer.writerow(i for i in header)
+    #
+    #     for el in all_data:
+    #         writer.writerow((
+    #             el.get('title'),
+    #             el.get('description'),
+    #             el.get('link'),
+    #             el.get('published')
+    #             ))
+
+    # with open('tmp.json', 'w') as f:
+    #     js = {"obj": all_data}
+    #     to_json = json.dumps(js, ensure_ascii=False)
+    #     f.write(to_json)
+    # print(json.dumps(all_data, ensure_ascii=False))
 
 
 # if __name__ == "__main__":
