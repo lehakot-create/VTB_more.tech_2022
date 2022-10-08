@@ -3,9 +3,18 @@ from fastapi import FastAPI, BackgroundTasks
 from db import RedisConnector
 from schemas import Role, ListSource
 from utils.app import main
+from utils.init_db import initialize
 
 app = FastAPI()
 conn = RedisConnector()
+
+
+@app.get("/")
+def index(background_tasks: BackgroundTasks):
+    # создать роль
+    background_tasks.add_task(initialize, conn=conn)
+    # заполнить ее источниками
+    return "WELCOME TO THE FUTURE"
 
 
 @app.post("/role/")
