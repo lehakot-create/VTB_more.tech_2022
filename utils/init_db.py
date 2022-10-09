@@ -79,7 +79,7 @@ init_roles = [{
     "rss": rss_channels_for_buh
 },
     {
-        'role': 'lawyers',
+        'role': 'leaders',
         "rss": rss_channels_for_leaders,
     },
     {

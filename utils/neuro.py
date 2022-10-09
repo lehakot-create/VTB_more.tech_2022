@@ -1,3 +1,5 @@
+import pathlib
+
 from tensorflow import keras
 import pandas as pd
 import numpy as np
@@ -8,12 +10,11 @@ import pymorphy2  # лемматизация текста
 import nltk
 from nltk.corpus import stopwords
 
-from tmp import value
 
 nltk.download('stopwords')  # Подгружаем стоп слова
 
 # Загружаем сохраненную модель
-model = keras.models.load_model('best_model.hdf5')
+model = keras.models.load_model('utils/best_model.hdf5')
 
 
 # Предобработка данных
@@ -32,16 +33,6 @@ def preprocess_text(text):
 
     return text
 
-
-# *****************
-
-# def lem(x):
-#     x = list(x.split())
-#     x = [morph.parse(w)[0].normal_form for w in x]
-#     return x
-
-
-# *****************
 
 def stop_words(x):
     x = list(x.split())
@@ -73,7 +64,9 @@ def data_prepocessing(value):
     text_description = stop_words(text_description)
 
     # Токенизируем текст
-    with open('tokenizer.pickle', 'rb') as f:
+    abspath = pathlib.Path("tokenizer.pickle").absolute()
+    print(abspath)
+    with open('/app/utils/tokenizer.pickle', 'rb') as f:
         tokenizer = pickle.load(f)
     text_title = tokenizer.texts_to_sequences([text_title])
     text_description = tokenizer.texts_to_sequences([text_description])
@@ -107,7 +100,7 @@ def data_prepocessing(value):
     text_description = stop_words(text_description)
 
     # Токенизируем текст
-    with open('tokenizer.pickle', 'rb') as f:
+    with open('utils/tokenizer.pickle', 'rb') as f:
         tokenizer = pickle.load(f)
     text_title = tokenizer.texts_to_sequences([text_title])
     text_description = tokenizer.texts_to_sequences([text_description])
@@ -132,10 +125,12 @@ def prediction_news(model, data):
     return pred
 
 
-
-
-# Проверка - выдача результата:
 def super_news(value):
+    """
+    Проверка - выдача результата:
+    :param value:
+    :return:
+    """
     pred = []
 
     for i in range(len(value)):
@@ -154,41 +149,25 @@ def super_news(value):
     return news_buh, news_ruk
 
 
-if __name__ == "__main__":
-    # Здесь берется значение value из файла tmp.txt
-    value = value[:50]  # Так как затроились данные, то обрежем
+def main_neuro(value, conn):
+    value = value[:50]
 
     top_news = super_news(value)
     buh = top_news[0]
     ruk = top_news[1]
-    print("buh", buh)
-    print("ruk", ruk)
+    # print("buh", buh)
+    # print("ruk", ruk[:2])
+    conn.write_news('buh', ruk[:2])
+    # print("buh", ruk[1:])
+    conn.write_news("leaders", ruk[1:])
 
-# для руководителя:
-# [{'title': 'Может ли работодатель запретить сотрудникам подрабатывать у конкурентов',
-#   'description': 'Работодатель запрещает сотрудникам устраиваться на подработку к конкурентам, или требует письменно согласовывать такое трудоустройство. Расскажем, может ли работодатель устанавливать такой запрет.',
-#   'link': 'https://www.glavbukh.ru/news/41469-mojet-li-rabotodatel-zapretit-sotrudnikam-podrabatyvat-u-konkurentov?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
-#   'published': 'Fri, 07 Oct 2022 07:00:00 +0300'},
-#  {'title': 'Как мобилизованному сохранить статус ИП и приостановить начисление налогов',
-#   'description': 'Эксперты ФНС разъяснили, как мобилизованный ИП, применяющий патентную систему налогообложения (ПСН), который не планирует вести деятельность, может не уплачивать налог и сохранить статус ИП.',
-#   'link': 'https://buh.ru/news/uchet_nalogi/155259/%3Futm_source%3Dsite%26utm_medium%3Drss%26utm_campaign%3Dnews',
-#   'published': 'Fri, 07 Oct 2022 11:40:00 +0300'},
-#  {'title': 'Работодатели увеличат зарплаты под новый МРОТ с 1 января 2023 года',
-#   'description': 'Зарплата сотрудников снова изменится, пересчитать ежемесячные выплаты придется из-за нового МРОТ. Минималку поднимают с 1 января 2023 года до 16 242 рублей.',
-#   'link': 'https://www.glavbukh.ru/news/41188-rabotodateli-uvelichat-zarplaty-pod-novyy-mrot-s-1-yanvarya-2023-goda?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
-#   'published': 'Fri, 07 Oct 2022 12:00:00 +0300'}]
 
-#   для буха
-
-# [{'title': 'Может ли работодатель запретить сотрудникам подрабатывать у конкурентов',
-#   'description': 'Работодатель запрещает сотрудникам устраиваться на подработку к конкурентам, или требует письменно согласовывать такое трудоустройство. Расскажем, может ли работодатель устанавливать такой запрет.',
-#   'link': 'https://www.glavbukh.ru/news/41469-mojet-li-rabotodatel-zapretit-sotrudnikam-podrabatyvat-u-konkurentov?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
-#   'published': 'Fri, 07 Oct 2022 07:00:00 +0300'},
-#  {'title': 'Как мобилизованному сохранить статус ИП и приостановить начисление налогов',
-#   'description': 'Эксперты ФНС разъяснили, как мобилизованный ИП, применяющий патентную систему налогообложения (ПСН), который не планирует вести деятельность, может не уплачивать налог и сохранить статус ИП.',
-#   'link': 'https://buh.ru/news/uchet_nalogi/155259/%3Futm_source%3Dsite%26utm_medium%3Drss%26utm_campaign%3Dnews',
-#   'published': 'Fri, 07 Oct 2022 11:40:00 +0300'},
-#  {'title': 'Работодатели увеличат зарплаты под новый МРОТ с 1 января 2023 года',
-#   'description': 'Зарплата сотрудников снова изменится, пересчитать ежемесячные выплаты придется из-за нового МРОТ. Минималку поднимают с 1 января 2023 года до 16 242 рублей.',
-#   'link': 'https://www.glavbukh.ru/news/41188-rabotodateli-uvelichat-zarplaty-pod-novyy-mrot-s-1-yanvarya-2023-goda?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
-#   'published': 'Fri, 07 Oct 2022 12:00:00 +0300'}]
+# if __name__ == "__main__":
+#     # Здесь берется значение value из файла tmp.txt
+#     value = value[:50]
+#
+#     top_news = super_news(value)
+#     buh = top_news[0]
+#     ruk = top_news[1]
+#     print("buh", buh)
+#     print("ruk", ruk)

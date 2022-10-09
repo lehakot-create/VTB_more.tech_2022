@@ -1,5 +1,7 @@
 import feedparser
 
+from .neuro import main_neuro
+
 
 def check_url(url_feed):
     """
@@ -35,10 +37,12 @@ def main(role: str, conn):
         value = list(eval(el).values())[0]
         all_data.extend(get_data(value))
     # print(all_data)
-    conn.write_news(role, all_data)
+    main_neuro(all_data, conn)
+    # conn.write_news(role, all_data)
 
 
 def collect_role(conn):
     roles = conn.get_all_roles()
     for role in roles:
-        main(role, conn)
+        if role == "buh":
+            main(role, conn)
