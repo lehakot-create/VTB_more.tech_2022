@@ -23,3 +23,10 @@ class RedisConnector:
 
     def get_news(self, role: str):
         return self.conn.lrange(f"{role}_news", 0, -1)
+
+    def write_trends(self, news: list):
+        self.conn.rpush("trends", str(news))
+
+    def get_trends(self):
+        return self.conn.lrange("trends", 0, -1)
+

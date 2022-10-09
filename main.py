@@ -4,6 +4,7 @@ from db import RedisConnector
 from schemas import Role, ListSource
 from utils.app import main, collect_role
 from utils.init_db import initialize
+from utils.trends import news_trends
 
 app = FastAPI()
 conn = RedisConnector()
@@ -13,12 +14,14 @@ conn = RedisConnector()
 def index(background_tasks: BackgroundTasks):
     background_tasks.add_task(initialize, conn=conn)
     background_tasks.add_task(collect_role, conn=conn)
+    background_tasks.add_task(news_trends, conn=conn)
     return "WELCOME TO THE FUTURE"
 
 
 @app.get("/trends/")
 def get_trends():
-    return "Hello from trends"
+    result = conn.get_trends()
+    return result
 
 
 @app.post("/role/")
