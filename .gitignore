@@ -3,6 +3,5 @@ __pycache__/
 data/
 consultant/
 output.csv
-utils/best_model.hdf5
+
 utils/tmp.py
-utils/tokenizer.pickle

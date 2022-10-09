@@ -161,32 +161,34 @@ if __name__ == "__main__":
     top_news = super_news(value)
     buh = top_news[0]
     ruk = top_news[1]
+    print("buh", buh)
+    print("ruk", ruk)
 
 # для руководителя:
-[{'title': 'Может ли работодатель запретить сотрудникам подрабатывать у конкурентов',
-  'description': 'Работодатель запрещает сотрудникам устраиваться на подработку к конкурентам, или требует письменно согласовывать такое трудоустройство. Расскажем, может ли работодатель устанавливать такой запрет.',
-  'link': 'https://www.glavbukh.ru/news/41469-mojet-li-rabotodatel-zapretit-sotrudnikam-podrabatyvat-u-konkurentov?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
-  'published': 'Fri, 07 Oct 2022 07:00:00 +0300'},
- {'title': 'Как мобилизованному сохранить статус ИП и приостановить начисление налогов',
-  'description': 'Эксперты ФНС разъяснили, как мобилизованный ИП, применяющий патентную систему налогообложения (ПСН), который не планирует вести деятельность, может не уплачивать налог и сохранить статус ИП.',
-  'link': 'https://buh.ru/news/uchet_nalogi/155259/%3Futm_source%3Dsite%26utm_medium%3Drss%26utm_campaign%3Dnews',
-  'published': 'Fri, 07 Oct 2022 11:40:00 +0300'},
- {'title': 'Работодатели увеличат зарплаты под новый МРОТ с 1 января 2023 года',
-  'description': 'Зарплата сотрудников снова изменится, пересчитать ежемесячные выплаты придется из-за нового МРОТ. Минималку поднимают с 1 января 2023 года до 16 242 рублей.',
-  'link': 'https://www.glavbukh.ru/news/41188-rabotodateli-uvelichat-zarplaty-pod-novyy-mrot-s-1-yanvarya-2023-goda?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
-  'published': 'Fri, 07 Oct 2022 12:00:00 +0300'}]
+# [{'title': 'Может ли работодатель запретить сотрудникам подрабатывать у конкурентов',
+#   'description': 'Работодатель запрещает сотрудникам устраиваться на подработку к конкурентам, или требует письменно согласовывать такое трудоустройство. Расскажем, может ли работодатель устанавливать такой запрет.',
+#   'link': 'https://www.glavbukh.ru/news/41469-mojet-li-rabotodatel-zapretit-sotrudnikam-podrabatyvat-u-konkurentov?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
+#   'published': 'Fri, 07 Oct 2022 07:00:00 +0300'},
+#  {'title': 'Как мобилизованному сохранить статус ИП и приостановить начисление налогов',
+#   'description': 'Эксперты ФНС разъяснили, как мобилизованный ИП, применяющий патентную систему налогообложения (ПСН), который не планирует вести деятельность, может не уплачивать налог и сохранить статус ИП.',
+#   'link': 'https://buh.ru/news/uchet_nalogi/155259/%3Futm_source%3Dsite%26utm_medium%3Drss%26utm_campaign%3Dnews',
+#   'published': 'Fri, 07 Oct 2022 11:40:00 +0300'},
+#  {'title': 'Работодатели увеличат зарплаты под новый МРОТ с 1 января 2023 года',
+#   'description': 'Зарплата сотрудников снова изменится, пересчитать ежемесячные выплаты придется из-за нового МРОТ. Минималку поднимают с 1 января 2023 года до 16 242 рублей.',
+#   'link': 'https://www.glavbukh.ru/news/41188-rabotodateli-uvelichat-zarplaty-pod-novyy-mrot-s-1-yanvarya-2023-goda?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
+#   'published': 'Fri, 07 Oct 2022 12:00:00 +0300'}]
 
 #   для буха
 
-[{'title': 'Может ли работодатель запретить сотрудникам подрабатывать у конкурентов',
-  'description': 'Работодатель запрещает сотрудникам устраиваться на подработку к конкурентам, или требует письменно согласовывать такое трудоустройство. Расскажем, может ли работодатель устанавливать такой запрет.',
-  'link': 'https://www.glavbukh.ru/news/41469-mojet-li-rabotodatel-zapretit-sotrudnikam-podrabatyvat-u-konkurentov?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
-  'published': 'Fri, 07 Oct 2022 07:00:00 +0300'},
- {'title': 'Как мобилизованному сохранить статус ИП и приостановить начисление налогов',
-  'description': 'Эксперты ФНС разъяснили, как мобилизованный ИП, применяющий патентную систему налогообложения (ПСН), который не планирует вести деятельность, может не уплачивать налог и сохранить статус ИП.',
-  'link': 'https://buh.ru/news/uchet_nalogi/155259/%3Futm_source%3Dsite%26utm_medium%3Drss%26utm_campaign%3Dnews',
-  'published': 'Fri, 07 Oct 2022 11:40:00 +0300'},
- {'title': 'Работодатели увеличат зарплаты под новый МРОТ с 1 января 2023 года',
-  'description': 'Зарплата сотрудников снова изменится, пересчитать ежемесячные выплаты придется из-за нового МРОТ. Минималку поднимают с 1 января 2023 года до 16 242 рублей.',
-  'link': 'https://www.glavbukh.ru/news/41188-rabotodateli-uvelichat-zarplaty-pod-novyy-mrot-s-1-yanvarya-2023-goda?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
-  'published': 'Fri, 07 Oct 2022 12:00:00 +0300'}]
+# [{'title': 'Может ли работодатель запретить сотрудникам подрабатывать у конкурентов',
+#   'description': 'Работодатель запрещает сотрудникам устраиваться на подработку к конкурентам, или требует письменно согласовывать такое трудоустройство. Расскажем, может ли работодатель устанавливать такой запрет.',
+#   'link': 'https://www.glavbukh.ru/news/41469-mojet-li-rabotodatel-zapretit-sotrudnikam-podrabatyvat-u-konkurentov?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
+#   'published': 'Fri, 07 Oct 2022 07:00:00 +0300'},
+#  {'title': 'Как мобилизованному сохранить статус ИП и приостановить начисление налогов',
+#   'description': 'Эксперты ФНС разъяснили, как мобилизованный ИП, применяющий патентную систему налогообложения (ПСН), который не планирует вести деятельность, может не уплачивать налог и сохранить статус ИП.',
+#   'link': 'https://buh.ru/news/uchet_nalogi/155259/%3Futm_source%3Dsite%26utm_medium%3Drss%26utm_campaign%3Dnews',
+#   'published': 'Fri, 07 Oct 2022 11:40:00 +0300'},
+#  {'title': 'Работодатели увеличат зарплаты под новый МРОТ с 1 января 2023 года',
+#   'description': 'Зарплата сотрудников снова изменится, пересчитать ежемесячные выплаты придется из-за нового МРОТ. Минималку поднимают с 1 января 2023 года до 16 242 рублей.',
+#   'link': 'https://www.glavbukh.ru/news/41188-rabotodateli-uvelichat-zarplaty-pod-novyy-mrot-s-1-yanvarya-2023-goda?utm_source=rsslenta&utm_medium=rss&utm_campaign=refer_rsslenta&utm_content=rsslenta_news',
+#   'published': 'Fri, 07 Oct 2022 12:00:00 +0300'}]
